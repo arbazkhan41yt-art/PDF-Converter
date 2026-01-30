@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge PDF - Combine Multiple PDF Files | FileFlex</title>
+    <meta name="description" content="Merge multiple PDF files into one. Combine PDFs in the order you want. 100% free and secure.">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#dc2626"/>
+                        <path d="M8 12h16v8H8z" fill="white"/>
+                    </svg>
+                    <span class="logo-text">FileFlex<br>Converter</span>
+                </div>
+                
+                <div class="nav-menu">
+                    <a href="../index.html" class="nav-item">MERGE PDF</a>
+                    <a href="../tools/split-pdf.html" class="nav-item">SPLIT PDF</a>
+                    <a href="../tools/compress-pdf.html" class="nav-item">COMPRESS PDF</a>
+                    <div class="nav-dropdown">
+                        <button class="nav-item dropdown-toggle">CONVERT PDF ▼</button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-section">
+                                <h3>CONVERT TO</h3>
+                                <a href="../tools/jpg-to-pdf.html">JPG to PDF</a>
+                                <a href="../tools/word-to-pdf.html">Word to PDF</a>
+                                <a href="../tools/ppt-to-pdf.html">PPT to PDF</a>
+                                <a href="../tools/excel-to-pdf.html">Excel to PDF</a>
+                                <a href="../tools/html-to-pdf.html">HTML to PDF</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h3>CONVERT FROM</h3>
+                                <a href="../tools/pdf-to-jpg.html">PDF to JPG</a>
+                                <a href="../tools/pdf-to-word.html">PDF to Word</a>
+                                <a href="../tools/pdf-to-ppt.html">PDF to PPT</a>
+                                <a href="../tools/pdf-to-excel.html">PDF to Excel</a>
+                                <a href="../tools/pdf-to-pdfa.html">PDF to PDF/A</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <button class="all-tools-btn">ALL PDF TOOLS ▼</button>
+                <a href="#" class="login-link">Login</a>
+                <button class="signup-btn">Sign up</button>
+                <button class="apps-menu">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <rect x="0" y="0" width="6" height="6" rx="1"/>
+                        <rect x="7" y="0" width="6" height="6" rx="1"/>
+                        <rect x="14" y="0" width="6" height="6" rx="1"/>
+                        <rect x="0" y="7" width="6" height="6" rx="1"/>
+                        <rect x="7" y="7" width="6" height="6" rx="1"/>
+                        <rect x="14" y="7" width="6" height="6" rx="1"/>
+                        <rect x="0" y="14" width="6" height="6" rx="1"/>
+                        <rect x="7" y="14" width="6" height="6" rx="1"/>
+                        <rect x="14" y="14" width="6" height="6" rx="1"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="tool-header-content">
+            <h1>Merge PDF</h1>
+            <p>Combine multiple PDF files into a single document</p>
+        </div>
+    </section>
+
+    <!-- Main Tool Area -->
+    <main class="tool-main">
+        <div class="tool-container">
+            <!-- Upload Area -->
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                            <rect width="80" height="80" rx="16" fill="rgba(249, 115, 22, 0.1)"/>
+                            <path d="M40 20v40m-20-20h40" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        <h3>Select PDF files</h3>
+                        <p>or drop PDF files here</p>
+                        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                            Browse Files
+                        </button>
+                        <input type="file" id="fileInput" accept=".pdf" multiple style="display: none;">
+                        <p class="file-size-limit">Maximum file size: 50MB per file</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Files List -->
+            <div class="files-section" id="filesSection" style="display: none;">
+                <h3>Files to merge (<span id="fileCount">0</span>)</h3>
+                <div class="files-list" id="filesList"></div>
+                
+                <div class="file-actions">
+                    <button class="add-more-btn" onclick="document.getElementById('fileInput').click()">
+                        + Add More Files
+                    </button>
+                    <button class="clear-all-btn" onclick="clearAllFiles()">
+                        Clear All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">Processing...</p>
+            </div>
+
+            <!-- Merge Button -->
+            <div class="merge-section" id="mergeSection" style="display: none;">
+                <button class="merge-btn" id="mergeBtn">
+                    Merge PDF Files
+                </button>
+            </div>
+
+            <!-- Download Section -->
+            <div class="download-section" id="downloadSection" style="display: none;">
+                <div class="success-message">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="24" fill="#22c55e"/>
+                        <path d="M16 24l8 8 16-16" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>PDFs Merged Successfully!</h3>
+                    <p>Your merged PDF file is ready to download.</p>
+                </div>
+                
+                <button class="download-btn" id="downloadBtn">
+                    Download Merged PDF
+                </button>
+                
+                <button class="merge-another-btn" id="mergeAnotherBtn">
+                    Merge More Files
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Instructions Section -->
+    <section class="instructions-section">
+        <div class="instructions-container">
+            <div class="instructions-grid">
+                <div class="instruction-item">
+                    <div class="instruction-number">1</div>
+                    <div class="instruction-content">
+                        <h4>Select PDF files</h4>
+                        <p>Choose multiple PDF files you want to merge by clicking browse or dragging them to the upload area.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">2</div>
+                    <div class="instruction-content">
+                        <h4>Arrange files (optional)</h4>
+                        <p>Drag and drop files to reorder them if needed. The merge will follow this order.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">3</div>
+                    <div class="instruction-content">
+                        <h4>Click Merge button</h4>
+                        <p>Start the merging process and wait for it to complete.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">4</div>
+                    <div class="instruction-content">
+                        <h4>Download merged PDF</h4>
+                        <p>Once merging is complete, download your combined PDF file.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <h2>Why use FileFlex PDF Merger?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>100% Free</h4>
+                    <p>No limits on number of files or file size</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Secure Processing</h4>
+                    <p>Files are processed locally, never uploaded</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <h4>Fast Merging</h4>
+                    <p>Quick processing with optimized algorithms</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>High Quality</h4>
+                    <p>Preserve original PDF quality and formatting</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Easy Reordering</h4>
+                    <p>Drag and drop to arrange files in desired order</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>No Registration</h4>
+                    <p>Start merging immediately without signup</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#dc2626"/>
+                        <path d="M8 12h16v8H8z" fill="white"/>
+                    </svg>
+                    <span>FileFlex Converter</span>
+                </div>
+                <div class="social-icons">
+                    <a href="#">📘</a>
+                    <a href="#">🐦</a>
+                    <a href="#">📷</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>PDF Tools</h4>
+                <a href="../index.html">Merge PDF</a>
+                <a href="../tools/split-pdf.html">Split PDF</a>
+                <a href="../tools/compress-pdf.html">Compress PDF</a>
+                <a href="../tools/organize-pdf.html">Organize PDF</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Convert to PDF</h4>
+                <a href="../tools/jpg-to-pdf.html">JPG to PDF</a>
+                <a href="../tools/word-to-pdf.html">Word to PDF</a>
+                <a href="../tools/ppt-to-pdf.html">PPT to PDF</a>
+                <a href="../tools/excel-to-pdf.html">Excel to PDF</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Convert from PDF</h4>
+                <a href="../tools/pdf-to-jpg.html">PDF to JPG</a>
+                <a href="../tools/pdf-to-word.html">PDF to Word</a>
+                <a href="../tools/pdf-to-ppt.html">PDF to PPT</a>
+                <a href="../tools/pdf-to-excel.html">PDF to Excel</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Edit & Secure</h4>
+                <a href="../tools/rotate-pdf.html">Rotate</a>
+                <a href="../tools/watermark-pdf.html">Watermark</a>
+                <a href="../tools/edit-pdf.html">Edit</a>
+                <a href="../tools/sign-pdf.html">Sign</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="newsletter">
+                <input type="email" placeholder="Enter email">
+                <button>Subscribe</button>
+            </div>
+            <div class="footer-links">
+                <span>© 2024 FileFlex Converter</span>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="../js/main.js"></script>
+    <script src="../js/utils/file-handler.js"></script>
+    <script src="../js/utils/progress-bar.js"></script>
+    <script src="../js/utils/download.js"></script>
+    <script src="merge-pdf.js"></script>
+</body>
+</html>
