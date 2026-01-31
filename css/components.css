@@ -1,3 +1,123 @@
+/* Components CSS - Universal Center Alignment for All 20 PDF Tools */
+
+/* Import universal center styles */
+@import url('ilovepdf-final.css');
+
+/* Force center alignment on all tools */
+.tool-container,
+.tool-main,
+.main-content,
+.content-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+}
+
+/* Remove all left sidebars and left alignment */
+.sidebar,
+.left-sidebar,
+.categories-menu,
+.tool-categories,
+.nav-sidebar {
+    display: none !important;
+}
+
+/* Force center all upload areas */
+.upload-section,
+.upload-container,
+.file-upload-section,
+.drop-zone-container,
+.tool-upload-area {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin: 40px auto !important;
+    width: 100% !important;
+}
+
+/* Force center all upload boxes - Exact iLovePDF Colors */
+.upload-area,
+.upload-box,
+.drop-zone,
+.file-drop-area,
+.tool-upload-box {
+    background-color: #ffffff !important; /* White upload box background */
+    border: 3px dashed #d1d5db !important; /* Light grey dashed border */
+    border-radius: 16px !important;
+    width: 360px !important;
+    height: 280px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Force exact iLovePDF colors on all buttons */
+.browse-btn,
+.upload-btn,
+.convert-btn,
+.download-btn,
+.action-btn,
+.select-btn {
+    background-color: #dc2626 !important; /* Red accent color */
+    color: #ffffff !important; /* White button text */
+}
+
+.browse-btn:hover,
+.upload-btn:hover,
+.convert-btn:hover,
+.download-btn:hover,
+.action-btn:hover,
+.select-btn:hover {
+    background-color: #b91c1c !important; /* Darker red hover */
+}
+
+/* Force exact iLovePDF colors on all text */
+h1, h2, h3, h4, h5, h6 {
+    color: #1f2937 !important; /* Dark grey headings */
+}
+
+p, span, div {
+    color: #6b7280 !important; /* Medium grey descriptions */
+}
+
+/* Force exact iLovePDF colors on navigation */
+.nav-item, .nav-link {
+    color: #000000 !important; /* Black navigation text */
+}
+
+/* Force exact iLovePDF colors on links */
+a {
+    color: #3b82f6 !important; /* Blue for links */
+}
+
+/* Force exact iLovePDF colors on file size info */
+.file-info,
+.file-size-info,
+.upload-limit,
+.max-size-info,
+.size-limit {
+    color: #9ca3af !important; /* Grey for file size limit text */
+}
+
+/* Force light grey background on all pages */
+body, .main, .container, .wrapper {
+    background-color: #f5f5f5 !important; /* Light grey page background */
+}
+
+/* Force center all success pages */
+.success-section,
+.download-section,
+.completion-area {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+}
+
 /* Component Styles for Tool Pages - iLovePDF Style */
 
 /* Tool Header */

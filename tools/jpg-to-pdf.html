@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/components.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/ilovepdf-final.css">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,26 +36,26 @@
                 
                 <div class="nav-menu">
                     <a href="../index.html" class="nav-item">MERGE PDF</a>
-                    <a href="../tools/split-pdf.html" class="nav-item">SPLIT PDF</a>
-                    <a href="../tools/compress-pdf.html" class="nav-item">COMPRESS PDF</a>
+                    <a href="split-pdf.html" class="nav-item">SPLIT PDF</a>
+                    <a href="compress-pdf.html" class="nav-item">COMPRESS PDF</a>
                     <div class="nav-dropdown">
                         <button class="nav-item dropdown-toggle">CONVERT PDF ▼</button>
                         <div class="dropdown-menu">
                             <div class="dropdown-section">
                                 <h3>CONVERT TO</h3>
-                                <a href="../tools/jpg-to-pdf.html">JPG to PDF</a>
-                                <a href="../tools/word-to-pdf.html">Word to PDF</a>
-                                <a href="../tools/ppt-to-pdf.html">PPT to PDF</a>
-                                <a href="../tools/excel-to-pdf.html">Excel to PDF</a>
-                                <a href="../tools/html-to-pdf.html">HTML to PDF</a>
+                                <a href="jpg-to-pdf.html">JPG to PDF</a>
+                                <a href="word-to-pdf.html">Word to PDF</a>
+                                <a href="ppt-to-pdf.html">PPT to PDF</a>
+                                <a href="excel-to-pdf.html">Excel to PDF</a>
+                                <a href="html-to-pdf.html">HTML to PDF</a>
                             </div>
                             <div class="dropdown-section">
                                 <h3>CONVERT FROM</h3>
-                                <a href="../tools/pdf-to-jpg.html">PDF to JPG</a>
-                                <a href="../tools/pdf-to-word.html">PDF to Word</a>
-                                <a href="../tools/pdf-to-ppt.html">PDF to PPT</a>
-                                <a href="../tools/pdf-to-excel.html">PDF to Excel</a>
-                                <a href="../tools/pdf-to-pdfa.html">PDF to PDF/A</a>
+                                <a href="pdf-to-jpg.html">PDF to JPG</a>
+                                <a href="pdf-to-word.html">PDF to Word</a>
+                                <a href="pdf-to-ppt.html">PDF to PPT</a>
+                                <a href="pdf-to-excel.html">PDF to Excel</a>
+                                <a href="pdf-to-pdfa.html">PDF to PDF/A</a>
                             </div>
                         </div>
                     </div>
@@ -86,291 +87,386 @@
     <section class="tool-header">
         <div class="tool-header-content">
             <h1>JPG to PDF</h1>
-            <p>Convert JPG, PNG, and other image files to PDF format</p>
+            <p>Convert JPG images to PDF format with custom page settings and layouts</p>
         </div>
     </section>
 
-    <!-- Main Tool Area -->
+    <!-- Main Tool Area - iLovePDF 3-Step Layout -->
     <main class="tool-main">
         <div class="tool-container">
-            <!-- Upload Area -->
-            <div class="upload-section">
-                <div class="upload-area" id="uploadArea">
-                    <div class="upload-content">
-                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-                            <rect width="80" height="80" rx="16" fill="rgba(234, 179, 8, 0.1)"/>
-                            <path d="M40 20v40m-20-20h40" stroke="#eab308" stroke-width="3" stroke-linecap="round"/>
-                        </svg>
-                        <h3>Select Image Files</h3>
-                        <p>or drop JPG, PNG, BMP, GIF files here</p>
-                        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
-                            Browse Files
+            
+            <!-- Step 1: UPLOAD Page -->
+            <div class="step-container" id="step1">
+                <div class="upload-center-container">
+                    <div class="upload-area-centered" id="uploadArea">
+                        <div class="upload-content-centered">
+                            <div class="folder-icon">
+                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                                    <rect width="80" height="80" rx="16" fill="rgba(220, 38, 38, 0.1)"/>
+                                    <path d="M40 20v40m-20-20h40" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <h3>Drop your images here</h3>
+                            <p>or click to browse</p>
+                            <button class="browse-btn" id="browseBtn">Browse Files</button>
+                            <input type="file" id="jpg-file-input" accept="image/jpeg,image/jpg,image/png,image/webp" multiple style="display: none;">
+                            <p class="file-info">Maximum file size: 50MB</p>
+                        </div>
+                    </div>
+
+                    <!-- Side Buttons -->
+                    <div class="side-buttons">
+                        <button class="side-btn drive-btn" title="Upload from Google Drive">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
                         </button>
-                        <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
-                        <p class="file-size-limit">Maximum file size: 10MB per image</p>
+                        <button class="side-btn dropbox-btn" title="Upload from Dropbox">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Images List -->
-            <div class="files-section" id="filesSection" style="display: none;">
-                <h3>Images to Convert (<span id="fileCount">0</span>)</h3>
-                <div class="files-list" id="filesList"></div>
-                
-                <div class="file-actions">
-                    <button class="add-more-btn" onclick="document.getElementById('fileInput').click()">
-                        + Add More Images
-                    </button>
-                    <button class="clear-all-btn" onclick="clearAllFiles()">
-                        Clear All
-                    </button>
+                <!-- Loading Spinner -->
+                <div class="loading-spinner" id="loadingSpinner" style="display: none; margin-top: 30px; text-align: center;">
+                    <div class="spinner" style="
+                        width: 40px;
+                        height: 40px;
+                        border: 4px solid #f3f4f6;
+                        border-top: 4px solid #dc2626;
+                        border-radius: 50%;
+                        animation: spin 1s linear infinite;
+                        margin: 0 auto 16px;
+                    "></div>
+                    <div style="color: #6b7280; font-size: 14px;">Loading image...</div>
                 </div>
             </div>
 
-            <!-- Conversion Options -->
-            <div class="options-section" id="optionsSection" style="display: none;">
-                <h3>PDF Options</h3>
-                <div class="options-grid">
-                    <div class="option-group">
-                        <label>Page Size</label>
-                        <select id="pageSize">
-                            <option value="a4">A4 (210 × 297 mm)</option>
-                            <option value="letter">Letter (8.5 × 11 inches)</option>
-                            <option value="legal">Legal (8.5 × 14 inches)</option>
-                            <option value="a3">A3 (297 × 420 mm)</option>
-                        </select>
+            <!-- Step 2: OPTIONS Page -->
+            <div class="step-container" id="step2" style="display: none;">
+                <div class="options-layout">
+                    <!-- Left Preview -->
+                    <div class="options-preview">
+                        <div class="preview-header">
+                            <h3>Images to convert</h3>
+                            <button class="add-more-btn" id="addMoreBtn" style="
+                                background-color: #dc2626;
+                                color: white;
+                                border: none;
+                                border-radius: 50%;
+                                width: 32px;
+                                height: 32px;
+                                cursor: pointer;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 18px;
+                                font-weight: bold;
+                            ">+</button>
+                        </div>
+                        <div class="preview-grid" id="previewGrid"></div>
                     </div>
                     
-                    <div class="option-group">
-                        <label>Orientation</label>
-                        <select id="orientation">
-                            <option value="portrait">Portrait</option>
-                            <option value="landscape">Landscape</option>
-                        </select>
-                    </div>
-                    
-                    <div class="option-group">
-                        <label>Margin</label>
-                        <select id="margin">
-                            <option value="none">No Margin</option>
-                            <option value="small">Small (0.5 inch)</option>
-                            <option value="medium" selected>Medium (1 inch)</option>
-                            <option value="large">Large (2 inches)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="option-group">
-                        <label>Image Fit</label>
-                        <select id="imageFit">
-                            <option value="contain" selected>Fit to Page</option>
-                            <option value="fill">Fill Page</option>
-                            <option value="original">Original Size</option>
-                        </select>
+                    <!-- Right Options -->
+                    <div class="options-panel">
+                        <h2>Image to PDF options</h2>
+                        
+                        <!-- Page Orientation -->
+                        <div class="option-section">
+                            <h4>Page orientation</h4>
+                            <div class="orientation-options">
+                                <label class="orientation-option selected" data-orientation="portrait">
+                                    <input type="radio" name="orientation" value="portrait" checked>
+                                    <div class="option-box">
+                                        <div class="orientation-icon portrait">
+                                            <div class="page"></div>
+                                        </div>
+                                        <span>Portrait</span>
+                                    </div>
+                                </label>
+                                <label class="orientation-option" data-orientation="landscape">
+                                    <input type="radio" name="orientation" value="landscape">
+                                    <div class="option-box">
+                                        <div class="orientation-icon landscape">
+                                            <div class="page"></div>
+                                        </div>
+                                        <span>Landscape</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Page Size -->
+                        <div class="option-section">
+                            <h4>Page size</h4>
+                            <div class="dropdown-container">
+                                <select class="page-size-dropdown" id="pageSize">
+                                    <option value="a4" selected>A4</option>
+                                    <option value="a3">A3</option>
+                                    <option value="a5">A5</option>
+                                    <option value="letter">Letter</option>
+                                    <option value="legal">Legal</option>
+                                </select>
+                                <div class="dropdown-arrow">▼</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Margin -->
+                        <div class="option-section">
+                            <h4>Margin</h4>
+                            <div class="margin-options">
+                                <label class="margin-option selected" data-margin="no">
+                                    <input type="radio" name="margin" value="no" checked>
+                                    <div class="option-box">
+                                        <div class="margin-icon no-margin">
+                                            <div class="page"></div>
+                                        </div>
+                                        <span>No margin</span>
+                                    </div>
+                                </label>
+                                <label class="margin-option" data-margin="small">
+                                    <input type="radio" name="margin" value="small">
+                                    <div class="option-box">
+                                        <div class="margin-icon small-margin">
+                                            <div class="page"></div>
+                                        </div>
+                                        <span>Small</span>
+                                    </div>
+                                </label>
+                                <label class="margin-option" data-margin="big">
+                                    <input type="radio" name="margin" value="big">
+                                    <div class="option-box">
+                                        <div class="margin-icon big-margin">
+                                            <div class="page"></div>
+                                        </div>
+                                        <span>Big</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <!-- Merge Option -->
+                        <div class="option-section">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="mergeAllImages" checked>
+                                <span class="checkmark"></span>
+                                <span>Merge all images in one PDF file</span>
+                            </label>
+                        </div>
+                        
+                        <!-- Convert Button -->
+                        <div class="convert-action">
+                            <button class="convert-btn" id="convertToPdfBtn" style="
+                                background-color: #dc2626;
+                                color: white;
+                                border: none;
+                                border-radius: 8px;
+                                padding: 14px 32px;
+                                font-size: 16px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.2s ease;
+                                width: 100%;
+                                margin-top: 20px;
+                            ">Convert to PDF</button>
+                        </div>
                     </div>
                 </div>
-                
-                <button class="convert-btn" id="convertBtn">
-                    Convert to PDF
-                </button>
             </div>
 
-            <!-- Progress Section -->
-            <div class="progress-section" id="progressSection" style="display: none;">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
+            <!-- Step 3: SUCCESS Page -->
+            <div class="step-container" id="step3" style="display: none;">
+                <div class="success-container">
+                    <h2>The images have been converted to PDF</h2>
+                    
+                    <!-- Download Section -->
+                    <div class="download-section">
+                        <button class="download-btn" id="downloadPdfBtn" style="
+                            background-color: #dc2626;
+                            color: white;
+                            border: none;
+                            border-radius: 8px;
+                            padding: 16px 32px;
+                            font-size: 18px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            transition: all 0.2s ease;
+                            display: flex;
+                            align-items: center;
+                            gap: 12px;
+                            margin: 0 auto;
+                        ">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7,10 12,15 17,10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download PDF
+                        </button>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons-container">
+                        <button class="back-btn" id="backToUploadBtn" style="
+                            background-color: #6b7280;
+                            color: white;
+                            border: none;
+                            border-radius: 50%;
+                            width: 48px;
+                            height: 48px;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        ">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M19 12H5M12 19l-7-7 7-7"/>
+                            </svg>
+                        </button>
+                        
+                        <div class="action-buttons">
+                            <button class="action-btn-round" title="Save to Google Drive">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                            </button>
+                            <button class="action-btn-round" title="Copy link">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                </svg>
+                            </button>
+                            <button class="action-btn-round" title="Save to Dropbox">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/>
+                                </svg>
+                            </button>
+                            <button class="action-btn-round" title="Delete">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                    <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14zM10 11v6M14 11v6"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Continue To Section -->
+                    <div class="continue-section">
+                        <h3>Continue to...</h3>
+                        <div class="continue-tools-grid">
+                            <div class="tool-card">
+                                <div class="tool-icon">🗜️</div>
+                                <div class="tool-name">Compress PDF</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">🔗</div>
+                                <div class="tool-name">Merge PDF</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">✂️</div>
+                                <div class="tool-name">Split PDF</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">💧</div>
+                                <div class="tool-name">Add watermark</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">🔄</div>
+                                <div class="tool-name">Rotate PDF</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">🔒</div>
+                                <div class="tool-name">Protect PDF</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Desktop App Banner -->
+                    <div class="desktop-app-banner" style="
+                        background-color: #3b82f6;
+                        color: white;
+                        padding: 20px;
+                        border-radius: 8px;
+                        margin: 30px 0;
+                        text-align: center;
+                    ">
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 12px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"/>
+                            </svg>
+                            <span>Work offline and enjoy powerful batch editing with FileFlex Desktop App</span>
+                            <a href="#" style="color: white; font-weight: 600; text-decoration: underline;">Get the App</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Box -->
+                    <div class="security-box" style="
+                        background-color: #f0f9ff;
+                        border: 1px solid #bae6fd;
+                        border-radius: 8px;
+                        padding: 20px;
+                        margin: 20px 0;
+                    ">
+                        <h4 style="color: #0369a1; margin-bottom: 10px;">Secure. Private. In your control</h4>
+                        <p style="color: #64748b; font-size: 14px; margin-bottom: 10px;">
+                            For over a decade FileFlex has securely processed documents with no storage, no tracking and complete privacy. Your files are always handled safely and automatically deleted after 2 hours.
+                        </p>
+                        <a href="#" style="color: #0284c7; font-size: 14px; text-decoration: underline;">Learn more</a>
+                    </div>
+                    
+                    <!-- Security Badges -->
+                    <div class="security-badges" style="
+                        display: flex;
+                        justify-content: center;
+                        gap: 30px;
+                        margin-top: 20px;
+                    ">
+                        <div class="badge" style="text-align: center;">
+                            <div style="width: 60px; height: 60px; background: #f3f4f6; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 10px; font-weight: bold; color: #374151;">ISO</span>
+                            </div>
+                            <div style="font-size: 12px; color: #6b7280;">ISO 27001</div>
+                        </div>
+                        <div class="badge" style="text-align: center;">
+                            <div style="width: 60px; height: 60px; background: #f3f4f6; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 10px; font-weight: bold; color: #374151;">SSL</span>
+                            </div>
+                            <div style="font-size: 12px; color: #6b7280;">Secure SSL Encryption</div>
+                        </div>
+                        <div class="badge" style="text-align: center;">
+                            <div style="width: 60px; height: 60px; background: #f3f4f6; border-radius: 8px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center;">
+                                <span style="font-size: 10px; font-weight: bold; color: #374151;">PDF</span>
+                            </div>
+                            <div style="font-size: 12px; color: #6b7280;">PDF Association</div>
+                        </div>
+                    </div>
                 </div>
-                <p class="progress-text" id="progressText">Converting images...</p>
-            </div>
-
-            <!-- Download Section -->
-            <div class="download-section" id="downloadSection" style="display: none;">
-                <div class="success-message">
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                        <circle cx="24" cy="24" r="24" fill="#22c55e"/>
-                        <path d="M16 24l8 8 16-16" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <h3>Images Converted Successfully!</h3>
-                    <p>Your images have been converted to PDF format.</p>
-                </div>
-                
-                <button class="download-btn" id="downloadBtn">
-                    Download PDF
-                </button>
-                
-                <button class="convert-another-btn" id="convertAnotherBtn">
-                    Convert More Images
-                </button>
             </div>
         </div>
     </main>
-
-    <!-- Instructions Section -->
-    <section class="instructions-section">
-        <div class="instructions-container">
-            <div class="instructions-grid">
-                <div class="instruction-item">
-                    <div class="instruction-number">1</div>
-                    <div class="instruction-content">
-                        <h4>Select image files</h4>
-                        <p>Choose JPG, PNG, BMP, or GIF files by clicking browse or dragging them to the upload area.</p>
-                    </div>
-                </div>
-                
-                <div class="instruction-item">
-                    <div class="instruction-number">2</div>
-                    <div class="instruction-content">
-                        <h4>Arrange images (optional)</h4>
-                        <p>Drag and drop images to reorder them. The conversion will follow this order.</p>
-                    </div>
-                </div>
-                
-                <div class="instruction-item">
-                    <div class="instruction-number">3</div>
-                    <div class="instruction-content">
-                        <h4>Choose PDF options</h4>
-                        <p>Select page size, orientation, margins, and how images should fit on pages.</p>
-                    </div>
-                </div>
-                
-                <div class="instruction-item">
-                    <div class="instruction-number">4</div>
-                    <div class="instruction-content">
-                        <h4>Click Convert button</h4>
-                        <p>Start the conversion process and download your PDF file.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section">
-        <div class="features-container">
-            <h2>Why use FileFlex JPG to PDF Converter?</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <h4>Multiple Images</h4>
-                    <p>Convert multiple images to a single PDF file</p>
-                </div>
-                
-                <div class="feature-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <h4>High Quality</h4>
-                    <p>Maintain original image quality in PDF output</p>
-                </div>
-                
-                <div class="feature-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
-                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                    </svg>
-                    <h4>Fast Processing</h4>
-                    <p>Quick conversion with optimized algorithms</p>
-                </div>
-                
-                <div class="feature-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <h4>Flexible Options</h4>
-                    <p>Customize page size, orientation, and margins</p>
-                </div>
-                
-                <div class="feature-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <h4>Multiple Formats</h4>
-                    <p>Support JPG, PNG, BMP, GIF, and more</p>
-                </div>
-                
-                <div class="feature-item">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <h4>Secure Processing</h4>
-                    <p>Images processed locally, never uploaded</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <div class="footer-logo">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect width="32" height="32" rx="8" fill="#dc2626"/>
-                        <path d="M8 12h16v8H8z" fill="white"/>
-                    </svg>
-                    <span>FileFlex Converter</span>
-                </div>
-                <div class="social-icons">
-                    <a href="https://facebook.com" target="_blank">📘</a>
-                    <a href="https://twitter.com" target="_blank">🐦</a>
-                    <a href="https://instagram.com" target="_blank">📷</a>
-                </div>
-            </div>
-            
-            <div class="footer-section">
-                <h4>PDF Tools</h4>
-                <a href="../index.html">Merge PDF</a>
-                <a href="../tools/split-pdf.html">Split PDF</a>
-                <a href="../tools/compress-pdf.html">Compress PDF</a>
-                <a href="../tools/organize-pdf.html">Organize PDF</a>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Convert to PDF</h4>
-                <a href="../tools/jpg-to-pdf.html">JPG to PDF</a>
-                <a href="../tools/word-to-pdf.html">Word to PDF</a>
-                <a href="../tools/ppt-to-pdf.html">PPT to PDF</a>
-                <a href="../tools/excel-to-pdf.html">Excel to PDF</a>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Convert from PDF</h4>
-                <a href="../tools/pdf-to-jpg.html">PDF to JPG</a>
-                <a href="../tools/pdf-to-word.html">PDF to Word</a>
-                <a href="../tools/pdf-to-ppt.html">PDF to PPT</a>
-                <a href="../tools/pdf-to-excel.html">PDF to Excel</a>
-            </div>
-            
-            <div class="footer-section">
-                <h4>Edit & Secure</h4>
-                <a href="../tools/rotate-pdf.html">Rotate</a>
-                <a href="../tools/watermark-pdf.html">Watermark</a>
-                <a href="../tools/edit-pdf.html">Edit</a>
-                <a href="../tools/sign-pdf.html">Sign</a>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <div class="newsletter">
-                <input type="email" id="newsletterEmail" placeholder="Enter email">
-                <button id="newsletterBtn">Subscribe</button>
-            </div>
-            <div class="footer-links">
-                <span>© 2024 FileFlex Converter</span>
-                <a href="../pages/privacy-policy.html">Privacy Policy</a>
-                <a href="../pages/terms.html">Terms</a>
-                <a href="../pages/contact.html">Contact</a>
-            </div>
-        </div>
-    </footer>
 
     <!-- JavaScript Files -->
     <script src="../js/main.js"></script>
     <script src="../js/utils/file-handler.js"></script>
     <script src="../js/utils/progress-bar.js"></script>
     <script src="../js/utils/download.js"></script>
+    
+    <!-- Universal Upload Handler -->
+    <script src="../js/universal-upload-handler.js"></script>
+    <script src="../js/tool-upload-integration.js"></script>
+    
+    <!-- Universal Downloader -->
     <script src="../js/utils/universal-download.js"></script>
-    <script src="../js/fix-downloads.js"></script>
+    <script src="../js/utils/fix-downloads.js"></script>
+    
+    <!-- Tool Script -->
     <script src="jpg-to-pdf.js"></script>
 </body>
 </html>

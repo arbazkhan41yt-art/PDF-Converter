@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TOOL_NAME}} - FileFlex</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/ilovepdf-final.css">
+    
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="../index.html">FileFlex</a>
+            </div>
+            <div class="nav-menu">
+                <div class="nav-item">
+                    <a href="../index.html">Home</a>
+                </div>
+                <div class="nav-item">
+                    <a href="../index.html#tools">All Tools</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="tool-container">
+        <!-- Tool Header -->
+        <div class="tool-header">
+            <div class="tool-header-content">
+                <h1>{{TOOL_NAME}}</h1>
+                <p>{{TOOL_DESCRIPTION}}</p>
+            </div>
+        </div>
+
+        <!-- Step Container -->
+        <div class="step-container">
+            <!-- Step 1: Upload -->
+            <div class="step-1 upload-step" id="uploadStep">
+                <!-- Upload Center Container -->
+                <div class="upload-center-container">
+                    <!-- Upload Box -->
+                    <div class="upload-box" id="uploadBox">
+                        <div class="upload-content">
+                            <!-- Folder Icon -->
+                            <div class="folder-icon">
+                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2">
+                                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                            </div>
+                            
+                            <!-- Upload Text -->
+                            <h3>{{DROP_MESSAGE}}</h3>
+                            <p>or click to browse</p>
+                            
+                            <!-- Browse Button -->
+                            <button class="browse-btn" id="browseBtn">Browse Files</button>
+                            
+                            <!-- File Info -->
+                            <div class="file-info" id="fileInfo">Maximum file size: {{MAX_SIZE}}</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Side Buttons -->
+                    <div class="side-buttons">
+                        <button class="side-btn drive-btn" title="Upload from Google Drive">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                            </svg>
+                        </button>
+                        <button class="side-btn dropbox-btn" title="Upload from Dropbox">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <rect x="2" y="8" width="8" height="8"/>
+                                <rect x="14" y="8" width="8" height="8"/>
+                                <rect x="8" y="14" width="8" height="8"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- File Preview Container -->
+                <div class="file-preview-container" id="filePreviewContainer" style="display: none;">
+                    <!-- Dynamic file preview will be inserted here -->
+                </div>
+                
+                <!-- Progress Container -->
+                <div class="progress-container" id="progressContainer" style="display: none;">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <div class="progress-text" id="progressText">Processing...</div>
+                </div>
+                
+                <!-- Error Container -->
+                <div class="error-container" id="errorContainer" style="display: none;">
+                    <div class="error-message" id="errorMessage"></div>
+                </div>
+            </div>
+
+            <!-- Step 2: Options (if applicable) -->
+            <div class="step-2 options-step" id="optionsStep" style="display: none;">
+                <div class="options-container">
+                    <h2>{{TOOL_NAME}} Options</h2>
+                    <!-- Tool-specific options will be inserted here -->
+                    <div class="tool-options" id="toolOptions">
+                        <!-- Dynamic options content -->
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="step-actions">
+                        <button class="back-step-btn" id="backBtn">Back</button>
+                        <button class="convert-btn" id="convertBtn">{{ACTION_BUTTON_TEXT}}</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Success -->
+            <div class="step-3 success-step" id="successStep" style="display: none;">
+                <div class="success-container">
+                    <h2>{{SUCCESS_MESSAGE}}</h2>
+                    
+                    <!-- Download Button -->
+                    <div class="download-section">
+                        <button class="download-btn" id="downloadBtn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7,10 12,15 17,10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Download {{OUTPUT_FILE_TYPE}}
+                        </button>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="action-btn" id="shareBtn">Share</button>
+                        <button class="action-btn" id="printBtn">Print</button>
+                        <button class="action-btn" id="editBtn">Edit</button>
+                        <button class="action-btn" id="deleteBtn">Delete</button>
+                    </div>
+                    
+                    <!-- Continue To Section -->
+                    <div class="continue-section">
+                        <h3>Continue to...</h3>
+                        <div class="continue-tools">
+                            <div class="tool-card">
+                                <div class="tool-icon">📄</div>
+                                <div class="tool-name">Compress PDF</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">🔗</div>
+                                <div class="tool-name">Merge PDF</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">✂️</div>
+                                <div class="tool-name">Split PDF</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">🔒</div>
+                                <div class="tool-name">Protect PDF</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">🔄</div>
+                                <div class="tool-name">Rotate PDF</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                            <div class="tool-card">
+                                <div class="tool-icon">💧</div>
+                                <div class="tool-name">Add Watermark</div>
+                                <div class="tool-arrow">→</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Start Over Button -->
+                    <div class="start-over-section">
+                        <button class="start-over-btn" id="startOverBtn">Start Over</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript Files -->
+    <script src="../js/main.js"></script>
+    <script src="../js/utils/file-handler.js"></script>
+    <script src="../js/utils/progress-bar.js"></script>
+    <script src="../js/utils/download.js"></script>
+    
+    <!-- Universal Upload Handler -->
+    <script src="../js/universal-upload-handler.js"></script>
+    <script src="../js/tool-upload-integration.js"></script>
+    
+    <!-- Universal Downloader -->
+    <script src="../js/utils/universal-download.js"></script>
+    <script src="../js/utils/fix-downloads.js"></script>
+    
+    <!-- Tool-Specific Script -->
+    <script src="{{TOOL_SCRIPT_PATH}}"></script>
+    
+    <script>
+        // Tool-specific configuration
+        window.TOOL_CONFIG = {
+            name: '{{TOOL_NAME}}',
+            description: '{{TOOL_DESCRIPTION}}',
+            inputType: '{{INPUT_TYPE}}',
+            outputType: '{{OUTPUT_TYPE}}',
+            maxFileSize: '{{MAX_FILE_SIZE_BYTES}}',
+            allowedTypes: '{{ALLOWED_TYPES}}',
+            multipleFiles: '{{MULTIPLE_FILES}}',
+            autoProcess: '{{AUTO_PROCESS}}'
+        };
+        
+        // Initialize tool when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 {{TOOL_NAME}} tool initialized');
+            
+            // Tool-specific initialization will be handled by the individual tool script
+        });
+    </script>
+</body>
+</html>
