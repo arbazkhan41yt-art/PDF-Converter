@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to PPT - Convert PDF Pages to PowerPoint | FileFlex</title>
+    <meta name="description" content="Convert PDF pages to PowerPoint slides. Extract content and create editable PPTX presentations. Free and secure.">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pptxgenjs/3.12.0/pptxgenjs.bundle.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#dc2626"/>
+                        <path d="M8 12h16v8H8z" fill="white"/>
+                    </svg>
+                    <span class="logo-text">FileFlex<br>Converter</span>
+                </div>
+                
+                <div class="nav-menu">
+                    <a href="../index.html" class="nav-item">MERGE PDF</a>
+                    <a href="../tools/split-pdf.html" class="nav-item">SPLIT PDF</a>
+                    <a href="../tools/compress-pdf.html" class="nav-item">COMPRESS PDF</a>
+                    <div class="nav-dropdown">
+                        <button class="nav-item dropdown-toggle">CONVERT PDF ▼</button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-section">
+                                <h3>CONVERT TO</h3>
+                                <a href="../tools/jpg-to-pdf.html">JPG to PDF</a>
+                                <a href="../tools/word-to-pdf.html">Word to PDF</a>
+                                <a href="../tools/ppt-to-pdf.html">PPT to PDF</a>
+                                <a href="../tools/excel-to-pdf.html">Excel to PDF</a>
+                                <a href="../tools/html-to-pdf.html">HTML to PDF</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h3>CONVERT FROM</h3>
+                                <a href="../tools/pdf-to-jpg.html">PDF to JPG</a>
+                                <a href="../tools/pdf-to-word.html">PDF to Word</a>
+                                <a href="../tools/pdf-to-ppt.html">PDF to PPT</a>
+                                <a href="../tools/pdf-to-excel.html">PDF to Excel</a>
+                                <a href="../tools/pdf-to-pdfa.html">PDF to PDF/A</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <button class="all-tools-btn">ALL PDF TOOLS ▼</button>
+                <a href="#" class="login-link">Login</a>
+                <button class="signup-btn">Sign up</button>
+                <button class="apps-menu">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <rect x="0" y="0" width="6" height="6" rx="1"/>
+                        <rect x="7" y="0" width="6" height="6" rx="1"/>
+                        <rect x="14" y="0" width="6" height="6" rx="1"/>
+                        <rect x="0" y="7" width="6" height="6" rx="1"/>
+                        <rect x="7" y="7" width="6" height="6" rx="1"/>
+                        <rect x="14" y="7" width="6" height="6" rx="1"/>
+                        <rect x="0" y="14" width="6" height="6" rx="1"/>
+                        <rect x="7" y="14" width="6" height="6" rx="1"/>
+                        <rect x="14" y="14" width="6" height="6" rx="1"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="tool-header-content">
+            <h1>PDF to PPT</h1>
+            <p>Convert PDF pages to PowerPoint slides with editable content</p>
+        </div>
+    </section>
+
+    <!-- Main Tool Area -->
+    <main class="tool-main">
+        <div class="tool-container">
+            <!-- Upload Area -->
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                            <rect width="80" height="80" rx="16" fill="rgba(249, 115, 22, 0.1)"/>
+                            <path d="M40 20v40m-20-20h40" stroke="#f97316" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        <h3>Select PDF File</h3>
+                        <p>or drop PDF file to convert to PowerPoint</p>
+                        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                            Browse Files
+                        </button>
+                        <input type="file" id="fileInput" accept=".pdf" style="display: none;">
+                        <p class="file-size-limit">Maximum file size: 20MB</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Info -->
+            <div class="file-info-section" id="fileInfoSection" style="display: none;">
+                <h3>Selected PDF</h3>
+                <div class="file-item">
+                    <div class="file-info">
+                        <div class="file-icon">📄</div>
+                        <div class="file-details">
+                            <h4 id="fileName">document.pdf</h4>
+                            <p>Pages: <span id="pageCount">0</span> | Size: <span id="fileSize">0 MB</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Selection -->
+            <div class="page-selection-section" id="pageSelectionSection" style="display: none;">
+                <h3>Select Pages to Convert</h3>
+                <div class="page-selection-options">
+                    <div class="selection-tabs">
+                        <button class="tab-btn active" data-selection="all">All Pages</button>
+                        <button class="tab-btn" data-selection="range">Page Range</button>
+                        <button class="tab-btn" data-selection="custom">Custom</button>
+                    </div>
+                    
+                    <div class="selection-content" id="allSelection">
+                        <p>All pages will be converted to slides</p>
+                    </div>
+                    
+                    <div class="selection-content" id="rangeSelection" style="display: none;">
+                        <div class="range-input">
+                            <input type="number" id="rangeStart" min="1" placeholder="Start">
+                            <span>to</span>
+                            <input type="number" id="rangeEnd" min="1" placeholder="End">
+                        </div>
+                    </div>
+                    
+                    <div class="selection-content" id="customSelection" style="display: none;">
+                        <input type="text" id="customPages" placeholder="e.g., 1,3,5-8,10">
+                        <small>Enter page numbers separated by commas or ranges</small>
+                    </div>
+                </div>
+                
+                <div class="page-preview" id="pagePreview"></div>
+            </div>
+
+            <!-- Conversion Options -->
+            <div class="options-section" id="optionsSection" style="display: none;">
+                <h3>PowerPoint Options</h3>
+                <div class="options-grid">
+                    <div class="option-group">
+                        <label>Slide Layout</label>
+                        <select id="slideLayout">
+                            <option value="title">Title Slide</option>
+                            <option value="content">Content Slide</option>
+                            <option value="blank">Blank Slide</option>
+                            <option value="auto">Auto Detect</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Slide Size</label>
+                        <select id="slideSize">
+                            <option value="standard">Standard (4:3)</option>
+                            <option value="widescreen">Widescreen (16:9)</option>
+                            <option value="widescreen16x10">Widescreen (16:10)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Text Extraction</label>
+                        <select id="textExtraction">
+                            <option value="preserve">Preserve Formatting</option>
+                            <option value="plain">Plain Text Only</option>
+                            <option value="auto">Auto Format</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Image Quality</label>
+                        <select id="imageQuality">
+                            <option value="high">High (300 DPI)</option>
+                            <option value="medium" selected>Medium (150 DPI)</option>
+                            <option value="low">Low (72 DPI)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="advanced-options">
+                    <h4>Advanced Options</h4>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="extractImages" checked>
+                            <span class="checkbox-custom"></span>
+                            <span>Extract images as slide backgrounds</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="preserveLayout" checked>
+                            <span class="checkbox-custom"></span>
+                            <span>Preserve original layout</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="addSlideNumbers">
+                            <span class="checkbox-custom"></span>
+                            <span>Add slide numbers</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="createTableOfContents">
+                            <span class="checkbox-custom"></span>
+                            <span>Create table of contents</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button class="convert-btn" id="convertBtn">
+                    Convert to PowerPoint
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">Converting PDF to PowerPoint...</p>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="preview-section" id="previewSection" style="display: none;">
+                <h3>PowerPoint Preview</h3>
+                <div class="slide-preview-grid" id="slidePreviewGrid"></div>
+                
+                <div class="conversion-stats" id="conversionStats">
+                    <div class="stat-item">
+                        <span class="stat-label">Slides Created:</span>
+                        <span class="stat-value" id="slidesCreated">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Text Elements:</span>
+                        <span class="stat-value" id="textElements">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Images Extracted:</span>
+                        <span class="stat-value" id="imagesExtracted">0</span>
+                    </div>
+                </div>
+                
+                <div class="download-options">
+                    <button class="download-btn" id="downloadBtn">
+                        Download PowerPoint
+                    </button>
+                    <button class="convert-another-btn" id="convertAnotherBtn">
+                        Convert Another PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Instructions Section -->
+    <section class="instructions-section">
+        <div class="instructions-container">
+            <div class="instructions-grid">
+                <div class="instruction-item">
+                    <div class="instruction-number">1</div>
+                    <div class="instruction-content">
+                        <h4>Select PDF file</h4>
+                        <p>Choose a PDF file by clicking browse or dragging it to the upload area.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">2</div>
+                    <div class="instruction-content">
+                        <h4>Select pages to convert</h4>
+                        <p>Choose all pages, a range, or specific pages for conversion.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">3</div>
+                    <div class="instruction-content">
+                        <h4>Choose PowerPoint options</h4>
+                        <p>Select slide layout, size, text extraction, and image quality.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">4</div>
+                    <div class="instruction-content">
+                        <h4>Convert and download</h4>
+                        <p>Click convert and download your PowerPoint presentation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <h2>Why use FileFlex PDF to PPT Converter?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Editable Slides</h4>
+                    <p>Create fully editable PowerPoint presentations</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Smart Layout Detection</h4>
+                    <p>Automatically detect and preserve slide layouts</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <h4>Text Extraction</h4>
+                    <p>Extract and format text elements properly</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Image Extraction</h4>
+                    <p>Extract images as slide backgrounds or elements</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Flexible Options</h4>
+                    <p>Multiple slide sizes and layouts available</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Secure Processing</h4>
+                    <p>Files processed locally, never uploaded</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#dc2626"/>
+                        <path d="M8 12h16v8H8z" fill="white"/>
+                    </svg>
+                    <span>FileFlex Converter</span>
+                </div>
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank">📘</a>
+                    <a href="https://twitter.com" target="_blank">🐦</a>
+                    <a href="https://instagram.com" target="_blank">📷</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>PDF Tools</h4>
+                <a href="../index.html">Merge PDF</a>
+                <a href="../tools/split-pdf.html">Split PDF</a>
+                <a href="../tools/compress-pdf.html">Compress PDF</a>
+                <a href="../tools/organize-pdf.html">Organize PDF</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Convert to PDF</h4>
+                <a href="../tools/jpg-to-pdf.html">JPG to PDF</a>
+                <a href="../tools/word-to-pdf.html">Word to PDF</a>
+                <a href="../tools/ppt-to-pdf.html">PPT to PDF</a>
+                <a href="../tools/excel-to-pdf.html">Excel to PDF</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Convert from PDF</h4>
+                <a href="../tools/pdf-to-jpg.html">PDF to JPG</a>
+                <a href="../tools/pdf-to-word.html">PDF to Word</a>
+                <a href="../tools/pdf-to-ppt.html">PDF to PPT</a>
+                <a href="../tools/pdf-to-excel.html">PDF to Excel</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Edit & Secure</h4>
+                <a href="../tools/rotate-pdf.html">Rotate</a>
+                <a href="../tools/watermark-pdf.html">Watermark</a>
+                <a href="../tools/edit-pdf.html">Edit</a>
+                <a href="../tools/sign-pdf.html">Sign</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="newsletter">
+                <input type="email" id="newsletterEmail" placeholder="Enter email">
+                <button id="newsletterBtn">Subscribe</button>
+            </div>
+            <div class="footer-links">
+                <span>© 2024 FileFlex Converter</span>
+                <a href="../pages/privacy-policy.html">Privacy Policy</a>
+                <a href="../pages/terms.html">Terms</a>
+                <a href="../pages/contact.html">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="../js/main.js"></script>
+    <script src="../js/utils/file-handler.js"></script>
+    <script src="../js/utils/progress-bar.js"></script>
+    <script src="../js/utils/download.js"></script>
+    <script src="pdf-to-ppt.js"></script>
+</body>
+</html>

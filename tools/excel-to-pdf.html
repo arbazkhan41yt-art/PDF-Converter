@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel to PDF - Convert XLSX/XLS to PDF | FileFlex</title>
+    <meta name="description" content="Convert Excel spreadsheets to PDF format. Preserve charts, tables, and formatting. Free and secure.">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#dc2626"/>
+                        <path d="M8 12h16v8H8z" fill="white"/>
+                    </svg>
+                    <span class="logo-text">FileFlex<br>Converter</span>
+                </div>
+                
+                <div class="nav-menu">
+                    <a href="../index.html" class="nav-item">MERGE PDF</a>
+                    <a href="../tools/split-pdf.html" class="nav-item">SPLIT PDF</a>
+                    <a href="../tools/compress-pdf.html" class="nav-item">COMPRESS PDF</a>
+                    <div class="nav-dropdown">
+                        <button class="nav-item dropdown-toggle">CONVERT PDF ▼</button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-section">
+                                <h3>CONVERT TO</h3>
+                                <a href="../tools/jpg-to-pdf.html">JPG to PDF</a>
+                                <a href="../tools/word-to-pdf.html">Word to PDF</a>
+                                <a href="../tools/ppt-to-pdf.html">PPT to PDF</a>
+                                <a href="../tools/excel-to-pdf.html">Excel to PDF</a>
+                                <a href="../tools/html-to-pdf.html">HTML to PDF</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h3>CONVERT FROM</h3>
+                                <a href="../tools/pdf-to-jpg.html">PDF to JPG</a>
+                                <a href="../tools/pdf-to-word.html">PDF to Word</a>
+                                <a href="../tools/pdf-to-ppt.html">PDF to PPT</a>
+                                <a href="../tools/pdf-to-excel.html">PDF to Excel</a>
+                                <a href="../tools/pdf-to-pdfa.html">PDF to PDF/A</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <button class="all-tools-btn">ALL PDF TOOLS ▼</button>
+                <a href="#" class="login-link">Login</a>
+                <button class="signup-btn">Sign up</button>
+                <button class="apps-menu">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <rect x="0" y="0" width="6" height="6" rx="1"/>
+                        <rect x="7" y="0" width="6" height="6" rx="1"/>
+                        <rect x="14" y="0" width="6" height="6" rx="1"/>
+                        <rect x="0" y="7" width="6" height="6" rx="1"/>
+                        <rect x="7" y="7" width="6" height="6" rx="1"/>
+                        <rect x="14" y="7" width="6" height="6" rx="1"/>
+                        <rect x="0" y="14" width="6" height="6" rx="1"/>
+                        <rect x="7" y="14" width="6" height="6" rx="1"/>
+                        <rect x="14" y="14" width="6" height="6" rx="1"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="tool-header-content">
+            <h1>Excel to PDF</h1>
+            <p>Convert Excel spreadsheets to PDF format while preserving charts, tables, and formatting</p>
+        </div>
+    </section>
+
+    <!-- Main Tool Area -->
+    <main class="tool-main">
+        <div class="tool-container">
+            <!-- Upload Area -->
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                            <rect width="80" height="80" rx="16" fill="rgba(34, 197, 94, 0.1)"/>
+                            <path d="M40 20v40m-20-20h40" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        <h3>Select Excel File</h3>
+                        <p>or drop XLSX or XLS file here</p>
+                        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                            Browse Files
+                        </button>
+                        <input type="file" id="fileInput" accept=".xlsx,.xls" style="display: none;">
+                        <p class="file-size-limit">Maximum file size: 20MB</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Info -->
+            <div class="file-info-section" id="fileInfoSection" style="display: none;">
+                <h3>Selected Excel File</h3>
+                <div class="file-item">
+                    <div class="file-info">
+                        <div class="file-icon">📊</div>
+                        <div class="file-details">
+                            <h4 id="fileName">spreadsheet.xlsx</h4>
+                            <p>Sheets: <span id="sheetCount">0</span> | Size: <span id="fileSize">0 MB</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sheet Selection -->
+            <div class="sheet-selection-section" id="sheetSelectionSection" style="display: none;">
+                <h3>Select Sheets to Convert</h3>
+                <div class="sheet-list" id="sheetList"></div>
+                
+                <div class="sheet-actions">
+                    <button class="select-all-btn" id="selectAllBtn">Select All</button>
+                    <button class="deselect-all-btn" id="deselectAllBtn">Deselect All</button>
+                </div>
+            </div>
+
+            <!-- Conversion Options -->
+            <div class="options-section" id="optionsSection" style="display: none;">
+                <h3>PDF Options</h3>
+                <div class="options-grid">
+                    <div class="option-group">
+                        <label>Page Size</label>
+                        <select id="pageSize">
+                            <option value="a4">A4 (210 × 297 mm)</option>
+                            <option value="letter">Letter (8.5 × 11 inches)</option>
+                            <option value="legal">Legal (8.5 × 14 inches)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Orientation</label>
+                        <select id="orientation">
+                            <option value="portrait">Portrait</option>
+                            <option value="landscape">Landscape</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Fit to Page</label>
+                        <select id="fitToPage">
+                            <option value="yes">Yes (fit sheet to page)</option>
+                            <option value="no">No (actual size)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Include Gridlines</label>
+                        <select id="includeGridlines">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="convert-btn" id="convertBtn">
+                    Convert to PDF
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">Converting Excel to PDF...</p>
+            </div>
+
+            <!-- Download Section -->
+            <div class="download-section" id="downloadSection" style="display: none;">
+                <div class="success-message">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="24" fill="#22c55e"/>
+                        <path d="M16 24l8 8 16-16" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>Excel Converted Successfully!</h3>
+                    <p>Your spreadsheet has been converted to PDF format.</p>
+                </div>
+                
+                <button class="download-btn" id="downloadBtn">
+                    Download PDF
+                </button>
+                
+                <button class="convert-another-btn" id="convertAnotherBtn">
+                    Convert Another File
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Instructions Section -->
+    <section class="instructions-section">
+        <div class="instructions-container">
+            <div class="instructions-grid">
+                <div class="instruction-item">
+                    <div class="instruction-number">1</div>
+                    <div class="instruction-content">
+                        <h4>Select Excel file</h4>
+                        <p>Choose an XLSX or XLS file by clicking browse or dragging it to the upload area.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">2</div>
+                    <div class="instruction-content">
+                        <h4>Select sheets to convert</h4>
+                        <p>Choose which worksheets you want to include in the PDF.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">3</div>
+                    <div class="instruction-content">
+                        <h4>Choose PDF options</h4>
+                        <p>Select page size, orientation, and other formatting options.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">4</div>
+                    <div class="instruction-content">
+                        <h4>Click Convert button</h4>
+                        <p>Start the conversion process and download your PDF file.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <h2>Why use FileFlex Excel to PDF Converter?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Preserve Formatting</h4>
+                    <p>Maintain cell formatting, colors, and styles</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Charts & Graphs</h4>
+                    <p>Convert charts and graphs to PDF format</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <h4>Multiple Sheets</h4>
+                    <p>Select specific sheets or convert all sheets</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>High Quality</h4>
+                    <p>Crystal clear output with proper scaling</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Flexible Options</h4>
+                    <p>Choose page size, orientation, and fit options</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Secure Processing</h4>
+                    <p>Files processed locally, never uploaded</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#dc2626"/>
+                        <path d="M8 12h16v8H8z" fill="white"/>
+                    </svg>
+                    <span>FileFlex Converter</span>
+                </div>
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank">📘</a>
+                    <a href="https://twitter.com" target="_blank">🐦</a>
+                    <a href="https://instagram.com" target="_blank">📷</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>PDF Tools</h4>
+                <a href="../index.html">Merge PDF</a>
+                <a href="../tools/split-pdf.html">Split PDF</a>
+                <a href="../tools/compress-pdf.html">Compress PDF</a>
+                <a href="../tools/organize-pdf.html">Organize PDF</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Convert to PDF</h4>
+                <a href="../tools/jpg-to-pdf.html">JPG to PDF</a>
+                <a href="../tools/word-to-pdf.html">Word to PDF</a>
+                <a href="../tools/ppt-to-pdf.html">PPT to PDF</a>
+                <a href="../tools/excel-to-pdf.html">Excel to PDF</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Convert from PDF</h4>
+                <a href="../tools/pdf-to-jpg.html">PDF to JPG</a>
+                <a href="../tools/pdf-to-word.html">PDF to Word</a>
+                <a href="../tools/pdf-to-ppt.html">PDF to PPT</a>
+                <a href="../tools/pdf-to-excel.html">PDF to Excel</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Edit & Secure</h4>
+                <a href="../tools/rotate-pdf.html">Rotate</a>
+                <a href="../tools/watermark-pdf.html">Watermark</a>
+                <a href="../tools/edit-pdf.html">Edit</a>
+                <a href="../tools/sign-pdf.html">Sign</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="newsletter">
+                <input type="email" id="newsletterEmail" placeholder="Enter email">
+                <button id="newsletterBtn">Subscribe</button>
+            </div>
+            <div class="footer-links">
+                <span>© 2024 FileFlex Converter</span>
+                <a href="../pages/privacy-policy.html">Privacy Policy</a>
+                <a href="../pages/terms.html">Terms</a>
+                <a href="../pages/contact.html">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="../js/main.js"></script>
+    <script src="../js/utils/file-handler.js"></script>
+    <script src="../js/utils/progress-bar.js"></script>
+    <script src="../js/utils/download.js"></script>
+    <script src="excel-to-pdf.js"></script>
+</body>
+</html>

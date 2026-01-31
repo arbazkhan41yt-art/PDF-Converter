@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Excel - Extract Tables from PDF | FileFlex</title>
+    <meta name="description" content="Extract tables and data from PDF to Excel format. Convert PDF to XLSX with accurate formatting. Free and secure.">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- PDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <nav class="nav-container">
+            <div class="nav-left">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#dc2626"/>
+                        <path d="M8 12h16v8H8z" fill="white"/>
+                    </svg>
+                    <span class="logo-text">FileFlex<br>Converter</span>
+                </div>
+                
+                <div class="nav-menu">
+                    <a href="../index.html" class="nav-item">MERGE PDF</a>
+                    <a href="../tools/split-pdf.html" class="nav-item">SPLIT PDF</a>
+                    <a href="../tools/compress-pdf.html" class="nav-item">COMPRESS PDF</a>
+                    <div class="nav-dropdown">
+                        <button class="nav-item dropdown-toggle">CONVERT PDF ▼</button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-section">
+                                <h3>CONVERT TO</h3>
+                                <a href="../tools/jpg-to-pdf.html">JPG to PDF</a>
+                                <a href="../tools/word-to-pdf.html">Word to PDF</a>
+                                <a href="../tools/ppt-to-pdf.html">PPT to PDF</a>
+                                <a href="../tools/excel-to-pdf.html">Excel to PDF</a>
+                                <a href="../tools/html-to-pdf.html">HTML to PDF</a>
+                            </div>
+                            <div class="dropdown-section">
+                                <h3>CONVERT FROM</h3>
+                                <a href="../tools/pdf-to-jpg.html">PDF to JPG</a>
+                                <a href="../tools/pdf-to-word.html">PDF to Word</a>
+                                <a href="../tools/pdf-to-ppt.html">PDF to PPT</a>
+                                <a href="../tools/pdf-to-excel.html">PDF to Excel</a>
+                                <a href="../tools/pdf-to-pdfa.html">PDF to PDF/A</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-right">
+                <button class="all-tools-btn">ALL PDF TOOLS ▼</button>
+                <a href="#" class="login-link">Login</a>
+                <button class="signup-btn">Sign up</button>
+                <button class="apps-menu">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <rect x="0" y="0" width="6" height="6" rx="1"/>
+                        <rect x="7" y="0" width="6" height="6" rx="1"/>
+                        <rect x="14" y="0" width="6" height="6" rx="1"/>
+                        <rect x="0" y="7" width="6" height="6" rx="1"/>
+                        <rect x="7" y="7" width="6" height="6" rx="1"/>
+                        <rect x="14" y="7" width="6" height="6" rx="1"/>
+                        <rect x="0" y="14" width="6" height="6" rx="1"/>
+                        <rect x="7" y="14" width="6" height="6" rx="1"/>
+                        <rect x="14" y="14" width="6" height="6" rx="1"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="tool-header-content">
+            <h1>PDF to Excel</h1>
+            <p>Extract tables and data from PDF to Excel format with accurate formatting</p>
+        </div>
+    </section>
+
+    <!-- Main Tool Area -->
+    <main class="tool-main">
+        <div class="tool-container">
+            <!-- Upload Area -->
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                            <rect width="80" height="80" rx="16" fill="rgba(34, 197, 94, 0.1)"/>
+                            <path d="M40 20v40m-20-20h40" stroke="#22c55e" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        <h3>Select PDF File</h3>
+                        <p>or drop PDF file containing tables here</p>
+                        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                            Browse Files
+                        </button>
+                        <input type="file" id="fileInput" accept=".pdf" style="display: none;">
+                        <p class="file-size-limit">Maximum file size: 20MB</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Info -->
+            <div class="file-info-section" id="fileInfoSection" style="display: none;">
+                <h3>Selected PDF</h3>
+                <div class="file-item">
+                    <div class="file-info">
+                        <div class="file-icon">📄</div>
+                        <div class="file-details">
+                            <h4 id="fileName">document.pdf</h4>
+                            <p>Pages: <span id="pageCount">0</span> | Size: <span id="fileSize">0 MB</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extraction Options -->
+            <div class="options-section" id="optionsSection" style="display: none;">
+                <h3>Extraction Options</h3>
+                <div class="options-grid">
+                    <div class="option-group">
+                        <label>Extraction Mode</label>
+                        <select id="extractionMode">
+                            <option value="auto">Auto Detect Tables</option>
+                            <option value="structured">Structured Data</option>
+                            <option value="text">Text Only</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Table Detection</label>
+                        <select id="tableDetection">
+                            <option value="smart">Smart Detection</option>
+                            <option value="grid">Grid-based</option>
+                            <option value="lines">Line-based</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Output Format</label>
+                        <select id="outputFormat">
+                            <option value="xlsx">Excel (.xlsx)</option>
+                            <option value="csv">CSV (.csv)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="option-group">
+                        <label>Include Formatting</label>
+                        <select id="includeFormatting">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="extract-btn" id="extractBtn">
+                    Extract Tables
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">Extracting tables...</p>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="preview-section" id="previewSection" style="display: none;">
+                <h3>Extracted Data Preview</h3>
+                <div class="table-preview" id="tablePreview"></div>
+                
+                <div class="extraction-stats" id="extractionStats">
+                    <div class="stat-item">
+                        <span class="stat-label">Tables Found:</span>
+                        <span class="stat-value" id="tablesFound">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Rows Extracted:</span>
+                        <span class="stat-value" id="rowsExtracted">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Columns:</span>
+                        <span class="stat-value" id="columnsFound">0</span>
+                    </div>
+                </div>
+                
+                <div class="download-options">
+                    <button class="download-btn" id="downloadBtn">
+                        Download Excel File
+                    </button>
+                    <button class="extract-another-btn" id="extractAnotherBtn">
+                        Extract Another PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Instructions Section -->
+    <section class="instructions-section">
+        <div class="instructions-container">
+            <div class="instructions-grid">
+                <div class="instruction-item">
+                    <div class="instruction-number">1</div>
+                    <div class="instruction-content">
+                        <h4>Select PDF file</h4>
+                        <p>Choose a PDF file containing tables by clicking browse or dragging it to the upload area.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">2</div>
+                    <div class="instruction-content">
+                        <h4>Choose extraction options</h4>
+                        <p>Select extraction mode, table detection method, and output format.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">3</div>
+                    <div class="instruction-content">
+                        <h4>Click Extract Tables</h4>
+                        <p>Start the table extraction process and wait for it to complete.</p>
+                    </div>
+                </div>
+                
+                <div class="instruction-item">
+                    <div class="instruction-number">4</div>
+                    <div class="instruction-content">
+                        <h4>Download Excel file</h4>
+                        <p>Preview the extracted data and download the Excel file.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <h2>Why use FileFlex PDF to Excel Converter?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Smart Table Detection</h4>
+                    <p>Automatically identify and extract table structures</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Accurate Formatting</h4>
+                    <p>Preserve cell formatting and data types</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                    <h4>Fast Processing</h4>
+                    <p>Quick extraction with optimized algorithms</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Multiple Formats</h4>
+                    <p>Export to Excel (.xlsx) or CSV format</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Data Preview</h4>
+                    <p>Preview extracted data before downloading</p>
+                </div>
+                
+                <div class="feature-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#22c55e">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h4>Secure Processing</h4>
+                    <p>Files processed locally, never uploaded</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <rect width="32" height="32" rx="8" fill="#dc2626"/>
+                        <path d="M8 12h16v8H8z" fill="white"/>
+                    </svg>
+                    <span>FileFlex Converter</span>
+                </div>
+                <div class="social-icons">
+                    <a href="https://facebook.com" target="_blank">📘</a>
+                    <a href="https://twitter.com" target="_blank">🐦</a>
+                    <a href="https://instagram.com" target="_blank">📷</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>PDF Tools</h4>
+                <a href="../index.html">Merge PDF</a>
+                <a href="../tools/split-pdf.html">Split PDF</a>
+                <a href="../tools/compress-pdf.html">Compress PDF</a>
+                <a href="../tools/organize-pdf.html">Organize PDF</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Convert to PDF</h4>
+                <a href="../tools/jpg-to-pdf.html">JPG to PDF</a>
+                <a href="../tools/word-to-pdf.html">Word to PDF</a>
+                <a href="../tools/ppt-to-pdf.html">PPT to PDF</a>
+                <a href="../tools/excel-to-pdf.html">Excel to PDF</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Convert from PDF</h4>
+                <a href="../tools/pdf-to-jpg.html">PDF to JPG</a>
+                <a href="../tools/pdf-to-word.html">PDF to Word</a>
+                <a href="../tools/pdf-to-ppt.html">PDF to PPT</a>
+                <a href="../tools/pdf-to-excel.html">PDF to Excel</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Edit & Secure</h4>
+                <a href="../tools/rotate-pdf.html">Rotate</a>
+                <a href="../tools/watermark-pdf.html">Watermark</a>
+                <a href="../tools/edit-pdf.html">Edit</a>
+                <a href="../tools/sign-pdf.html">Sign</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="newsletter">
+                <input type="email" id="newsletterEmail" placeholder="Enter email">
+                <button id="newsletterBtn">Subscribe</button>
+            </div>
+            <div class="footer-links">
+                <span>© 2024 FileFlex Converter</span>
+                <a href="../pages/privacy-policy.html">Privacy Policy</a>
+                <a href="../pages/terms.html">Terms</a>
+                <a href="../pages/contact.html">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="../js/main.js"></script>
+    <script src="../js/utils/file-handler.js"></script>
+    <script src="../js/utils/progress-bar.js"></script>
+    <script src="../js/utils/download.js"></script>
+    <script src="pdf-to-excel.js"></script>
+</body>
+</html>
